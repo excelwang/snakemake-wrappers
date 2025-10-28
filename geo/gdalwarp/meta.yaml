@@ -1,0 +1,39 @@
+name: "gdalwarp_docker"
+description: "Snakemake wrapper to run gdalwarp inside a Docker
+author: "Jianghua Zhao"
+
+container: 
+  image: "docker.1ms.run/osgeo/gdal:ubuntu-small-3.6.3"
+
+# 输入输出文件
+inputs:
+  - "Input raster file."
+outputs:
+  - "Warped raster file."
+
+# Snakemake wrapper 参数定义
+parameters:
+  params:
+  gdalwarp_args:
+    type: list
+    default:
+      - "-overwrite"
+      - "-t_srs"
+      - "EPSG:4326"
+      - "-r"
+      - "bilinear"
+      - "-co"
+      - "COMPRESS=DEFLATE"
+    description: >
+      List of arguments to pass to gdalwarp.
+      You can use any gdalwarp options, e.g.:
+      - Resampling: -r near|bilinear|cubic|cubicspline|lanczos|average|mode|max|min|med|Q1|Q3|sum
+      - Projection: -s_srs <srs_def> -t_srs <srs_def>
+      - Output format: -of GTiff
+      - Extent / resolution: -te xmin ymin xmax ymax -tr xres yres -ts width height -tap
+      - Nodata: -srcnodata <value> -dstnodata <value>
+      - Cutline: -cutline datasource -cl layer -cwhere expression
+      - Other GDAL options: -co "NAME=VALUE", -wo "NAME=VALUE", -multi, -overwrite, etc.
+
+
+
