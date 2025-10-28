@@ -1,0 +1,19 @@
+rule gdal_warp:
+    input:
+        "umd_luccxian.tif"
+    output:
+        "outputs/reprojected_wgs84.tif"
+    log:
+        "logs/gdalwarp.log"
+    params:
+        gdalwarp_args=[
+            "-overwrite",
+            "-t_srs", "EPSG:4326",
+            "-r", "bilinear",
+            "-co", "COMPRESS=DEFLATE",
+        ]
+    container:
+        "docker.1ms.run/osgeo/gdal:ubuntu-small-3.6.3"
+    wrapper:
+        "file:../wrapper.py"
+
