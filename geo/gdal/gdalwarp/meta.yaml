@@ -3,8 +3,8 @@ description: "Snakemake wrapper to run gdalwarp inside a Docker
 author: "Jianghua Zhao"
 
 container: 
-  image: "docker.1ms.run/osgeo/gdal:ubuntu-small-3.6.3"
-
+  image: "docker://docker.1ms.run/osgeo/gdal:ubuntu-small-3.6.3"
+conda: null
 # 输入输出文件
 inputs:
   - "Input raster file."

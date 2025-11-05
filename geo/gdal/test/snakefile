@@ -1,0 +1,33 @@
+container: "docker://docker.1ms.run/osgeo/gdal:ubuntu-small-3.6.3"
+
+rule all:  
+    input:  
+        "outputs/reprojected_wgs84.tif",
+        "outputs/umd_luccxian_info.txt"
+        
+rule gdal_warp:
+    input:
+        "umd_luccxian.tif"
+    output:
+        "outputs/reprojected_wgs84.tif"
+    log:
+        "logs/gdalwarp.log"
+    params:
+        gdalwarp_args=[
+            "-overwrite",
+            "-t_srs", "EPSG:4326",
+            "-r", "bilinear",
+            "-co", "COMPRESS=DEFLATE",
+        ]
+    wrapper:
+        "file:../gdalwarp"
+
+rule gdalinfo:
+    input:
+        "umd_luccxian.tif"
+    output:
+        "outputs/umd_luccxian_info.txt"
+    params:
+        gdalinfo_args=["-stats"]
+    wrapper:
+        "file:../gdalinfo"

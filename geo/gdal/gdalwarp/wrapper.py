@@ -13,6 +13,16 @@ if output_dir:
 args = snakemake.params.get("gdalwarp_args", ["-overwrite", "-t_srs", "EPSG:4326", "-r", "bilinear"])
 gdalwarp_args = " ".join(args) if isinstance(args, list) else args
 
+# # 容器镜像
+# container_image = "docker://docker.1ms.run/osgeo/gdal:ubuntu-small-3.6.3"
+
+# # 构造命令：容器执行
+# cmd = f"apptainer exec {container_image} gdalwarp {gdalwarp_args} {input_file} {output_file}"
+# print("Running gdalwarp in container:", cmd)
+
+# # 执行命令
+# shell(cmd)
+
 cmd = f"gdalwarp {gdalwarp_args} {input_file} {output_file}"
 print("Running gdalwarp:", cmd)
 
